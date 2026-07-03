@@ -1,41 +1,57 @@
 <!doctype html>
 <html lang="en" class="notranslate" translate="no">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
+
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="google" content="notranslate" />
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="google" content="notranslate">
+
+    <meta name="theme-color" content="#5c4a43">
+
     <title>Cozy Sudoku</title>
-    <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="game-container">
-      <button id="theme-toggle">🌙 Cozy Dark</button>
 
-      <h1>Cozy Sudoku</h1>
+    <link rel="manifest" href="./manifest.json">
 
-      <div class="status-bar">
+    <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <button id="theme-toggle">🌙 Cozy Dark</button>
+
+    <h1>Cozy Sudoku</h1>
+
+    <div class="status-bar">
         <div class="status-item">⏱️ <span id="timer">00:00</span></div>
         <div class="status-item">❌ Mistakes: <span id="mistakes">0/3</span></div>
-      </div>
+    </div>
 
-      <div id="sudoku-grid" class="grid"></div>
-      
-      <div class="controls">
+    <div id="sudoku-grid" class="grid"></div>
+
+    <div class="controls">
+
         <select id="difficulty-select" class="cozy-select">
-          <option value="45" selected>🌱 Easy</option>
-          <option value="35">🪵 Medium</option>
-          <option value="25">🔥 Hard</option>
-          <option value="18">🏆 Expert</option>
+            <option value="45" selected>🌱 Easy</option>
+            <option value="35">🪵 Medium</option>
+            <option value="25">🔥 Hard</option>
+            <option value="18">🏆 Expert</option>
         </select>
-        <button id="reset-btn">🔄 New Game</button>
-        <button id="hint-btn">💡 Hint (3)</button>
-      </div>
 
-      <div class="number-pad">
+        <button id="reset-btn">🔄 New Game</button>
+
+        <button id="hint-btn">💡 Hint (3)</button>
+
+    </div>
+
+    <div class="number-pad">
+
         <button class="pad-btn" data-num="1">1</button>
         <button class="pad-btn" data-num="2">2</button>
         <button class="pad-btn" data-num="3">3</button>
@@ -46,8 +62,12 @@
         <button class="pad-btn" data-num="8">8</button>
         <button class="pad-btn" data-num="9">9</button>
         <button class="pad-btn" data-num="">🧹</button>
-      </div>
+
     </div>
-    <script src="script.js"></script>
-  </body>
+
+</div>
+
+<script src="./script.js"></script>
+
+</body>
 </html>

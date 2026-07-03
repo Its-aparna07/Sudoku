@@ -1,6 +1,13 @@
 {
   "name": "Cozy Sudoku",
   "short_name": "Sudoku",
+  "description": "A cozy Sudoku game that works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf6f0",
+  "theme_color": "#5c4a43",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icons/icon-48x48.png",
@@ -52,9 +59,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#faf6f0",
-  "theme_color": "#5c4a43"
+  ]
 }
