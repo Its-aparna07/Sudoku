@@ -151,18 +151,72 @@ function updateSelectedCellValue(num) {
   if (num === "") {
     selectedCell.textContent = "";
     currentBoard[index] = 0;
+
+    // Recalculate errors for the rest of the board when a number is wiped
+    revalidateEntireBoard();
   } else {
     selectedCell.textContent = num;
     const inputNum = parseInt(num);
     currentBoard[index] = inputNum;
 
-    // Instant validation check: Compare directly against the solution matrix path
-    if (inputNum === solutionBoard[row][col]) {
-      selectedCell.classList.add("correct");
-    } else {
+    // Check if this input conflicts with CURRENT visible numbers
+    if (hasCurrentConflict(index, inputNum)) {
       selectedCell.classList.add("error");
+    } else {
+      // It's a clean, logically valid placement for now!
+      selectedCell.classList.add("correct");
     }
   }
+}
+
+/**
+ * Helper to check if a placement conflicts with any CURRENT numbers on the board
+ */
+function hasCurrentConflict(index, num) {
+  const row = Math.floor(index / 9);
+  const col = index % 9;
+
+  for (let i = 0; i < 81; i++) {
+    if (i === index || currentBoard[i] !== num) continue;
+
+    const peerRow = Math.floor(i / 9);
+    const peerCol = i % 9;
+
+    // Check Row conflict
+    if (peerRow === row) return true;
+    // Check Column conflict
+    if (peerCol === col) return true;
+    // Check 3x3 Box conflict
+    const boxRowStart = Math.floor(row / 3) * 3;
+    const boxColStart = Math.floor(col / 3) * 3;
+    const peerBoxRowStart = Math.floor(peerRow / 3) * 3;
+    const peerBoxColStart = Math.floor(peerCol / 3) * 3;
+
+    if (boxRowStart === peerBoxRowStart && boxColStart === peerBoxColStart) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Optional: Cleans up old error highlights if a conflicting number is deleted
+ */
+function revalidateEntireBoard() {
+  document.querySelectorAll(".cell").forEach((cell) => {
+    if (cell.classList.contains("initial")) return;
+    const idx = parseInt(cell.dataset.index);
+    const val = currentBoard[idx];
+
+    cell.classList.remove("error", "correct");
+    if (val !== 0) {
+      if (hasCurrentConflict(idx, val)) {
+        cell.classList.add("error");
+      } else {
+        cell.classList.add("correct");
+      }
+    }
+  });
 }
 
 // User Control Inputs (Keyboard / On-screen Pad)
