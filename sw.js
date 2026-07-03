@@ -1,4 +1,4 @@
-const CACHE_NAME = "cozy-sudoku-v1";
+const CACHE_NAME = 'cozy-sudoku-v5'; // Bumped to v5 to force clean automatic update on level selector features
 const ASSETS_TO_CACHE = [
   "./",
   "index.html",
@@ -18,38 +18,39 @@ const ASSETS_TO_CACHE = [
 ];
 
 // 1. Install Event - Caching the game assets locally
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("Cozy caching complete!");
+      console.log('Cozy caching complete!');
       return cache.addAll(ASSETS_TO_CACHE);
-    }),
+    })
   );
-  self.skipWaiting();
+  self.skipWaiting(); // Force the latest worker to activate instantly
 });
 
-// 2. Activate Event - Cleaning up old caches
-self.addEventListener("activate", (event) => {
+// 2. Activate Event - Automatically purges older caches so all new features load instantly
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log("Clearing old cache room...");
+            console.log('Clearing old cache room:', cache);
             return caches.delete(cache);
           }
-        }),
+        })
       );
-    }),
+    })
   );
   self.clients.claim();
 });
 
 // 3. Fetch Event - Cache-First Strategy for Instant Offline Play
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
+      // Return local cache file if found, otherwise fall back to network
       return cachedResponse || fetch(event.request);
-    }),
+    })
   );
 });

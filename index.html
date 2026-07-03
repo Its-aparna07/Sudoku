@@ -17,13 +17,24 @@
 
       <h1>Cozy Sudoku</h1>
 
-      <div class="timer-container">⏱️ <span id="timer">00:00</span></div>
+      <div class="status-bar">
+        <div class="status-item">⏱️ <span id="timer">00:00</span></div>
+        <div class="status-item">❌ Mistakes: <span id="mistakes">0/3</span></div>
+      </div>
 
       <div id="sudoku-grid" class="grid"></div>
+      
       <div class="controls">
-        <button id="reset-btn">✨ New Game</button>
-        <button id="check-btn">🌸 Check</button>
+        <select id="difficulty-select" class="cozy-select">
+          <option value="45" selected>🌱 Easy</option>
+          <option value="35">🪵 Medium</option>
+          <option value="25">🔥 Hard</option>
+          <option value="18">🏆 Expert</option>
+        </select>
+        <button id="reset-btn">🔄 New Game</button>
+        <button id="hint-btn">💡 Hint (3)</button>
       </div>
+
       <div class="number-pad">
         <button class="pad-btn" data-num="1">1</button>
         <button class="pad-btn" data-num="2">2</button>
