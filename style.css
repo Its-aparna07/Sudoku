@@ -1,220 +1,248 @@
 :root {
-    /* --- Cozy Light Mode (Default Mobile-First) --- */
-    --bg-color: #faf6f0;         /* Warm cream milk */
-    --container-bg: #fffbf7;     /* Soft vanilla */
-    --text-color: #5c4a43;       /* Warm cocoa brown */
-    --grid-border: #a8928a;      /* Soft clay brown */
-    --cell-border: #e6ded8;      /* Light latte line */
-    --cell-bg: #ffffff;
-    --cell-initial-bg: #f4ece1;  /* Toasted oat biscuit */
-    --cell-selected: #fcd7da;    /* Cozy blush pink */
-    --btn-bg: #f5ebe6;           /* Soft almond */
-    --btn-border: #e6ded8;
-    --timer-bg: #f5ebe6;
-    --match-highlight: #fff2cc;  /* Soft butter yellow */
-    
-    /* Responsive Fluid Sizing - Adapts flawlessly to any mobile width */
-    --cell-size: min(10.2vw, 46px); 
+  /* --- Cozy Light Mode (Default Mobile-First) --- */
+  --bg-color: #faf6f0; /* Warm cream milk */
+  --container-bg: #fffbf7; /* Soft vanilla */
+  --text-color: #5c4a43; /* Warm cocoa brown */
+  --grid-border: #a8928a; /* Soft clay brown */
+  --cell-border: #e6ded8; /* Light latte line */
+  --cell-bg: #ffffff;
+  --cell-initial-bg: #f4ece1; /* Toasted oat biscuit */
+  --cell-selected: #fcd7da; /* Cozy blush pink */
+  --btn-bg: #f5ebe6; /* Soft almond */
+  --btn-border: #e6ded8;
+  --timer-bg: #f5ebe6;
+  --match-highlight: #fff2cc; /* Soft butter yellow */
+
+  /* Responsive Fluid Sizing - Adapts flawlessly to any mobile width */
+  --cell-size: min(10.2vw, 46px);
 }
 
 [data-theme="dark"] {
-    /* --- Cozy Dark Mode --- */
-    --bg-color: #231c1a;         /* Deep espresso */
-    --container-bg: #2d2421;     /* Warm dark chocolate */
-    --text-color: #f5ebe6;       /* Soft oat cream */
-    --grid-border: #705a52;      /* Muted cinnamon */
-    --cell-border: #423531;      /* Dark cocoa outline */
-    --cell-bg: #362b28;          /* Soft charcoal brown */
-    --cell-initial-bg: #473935;  /* Deep roasted coffee bean */
-    --cell-selected: #664147;    /* Deep cozy mauve-rose */
-    --btn-bg: #3d312d;
-    --btn-border: #4f3f3a;
-    --timer-bg: #3d312d;
-    --match-highlight: #594c2d;  /* Muted amber glow */
+  /* --- Cozy Dark Mode --- */
+  --bg-color: #231c1a; /* Deep espresso */
+  --container-bg: #2d2421; /* Warm dark chocolate */
+  --text-color: #f5ebe6; /* Soft oat cream */
+  --grid-border: #705a52; /* Muted cinnamon */
+  --cell-border: #423531; /* Dark cocoa outline */
+  --cell-bg: #362b28; /* Soft charcoal brown */
+  --cell-initial-bg: #473935; /* Deep roasted coffee bean */
+  --cell-selected: #664147; /* Deep cozy mauve-rose */
+  --btn-bg: #3d312d;
+  --btn-border: #4f3f3a;
+  --timer-bg: #3d312d;
+  --match-highlight: #594c2d; /* Muted amber glow */
 }
 
 /* Global Reset & Strict Blue Box/Copy Prevention */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    
-    /* Stops long-press blue highlight box & text copying entirely */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-    
-    /* Removes the flash overlay box when tapping items on touchscreens */
-    -webkit-tap-highlight-color: transparent; 
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  /* Stops long-press blue highlight box & text copying entirely */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+
+  /* Removes the flash overlay box when tapping items on touchscreens */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 10px;
-    transition: background-color 0.4s, color 0.4s;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+  transition:
+    background-color 0.4s,
+    color 0.4s;
 }
 
 .game-container {
-    width: 100%;
-    max-width: 440px; /* Perfect containment profile for mobile & desktop layouts */
-    background: var(--container-bg);
-    padding: 20px 15px;
-    border-radius: 24px; /* Super rounded cozy borders */
-    box-shadow: 0 10px 30px rgba(92, 74, 67, 0.1);
-    position: relative;
-    transition: background-color 0.4s;
+  width: 100%;
+  max-width: 440px; /* Perfect containment profile for mobile & desktop layouts */
+  background: var(--container-bg);
+  padding: 20px 15px;
+  border-radius: 24px; /* Super rounded cozy borders */
+  box-shadow: 0 10px 30px rgba(92, 74, 67, 0.1);
+  position: relative;
+  transition: background-color 0.4s;
 }
 
 #theme-toggle {
-    position: absolute;
-    top: 18px;
-    right: 15px;
-    background: var(--btn-bg);
-    border: 1px solid var(--btn-border);
-    color: var(--text-color);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--text-color);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 h1 {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    text-align: left;
-    padding-left: 5px;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-align: left;
+  padding-left: 5px;
 }
 
 .timer-container {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: 15px;
-    background: var(--timer-bg);
-    display: inline-block;
-    padding: 6px 16px;
-    border-radius: 50px;
-    border: 1px solid var(--btn-border);
-    float: left;
-    clear: both;
-    margin-left: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  background: var(--timer-bg);
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--btn-border);
+  float: left;
+  clear: both;
+  margin-left: 5px;
 }
 
 /* Adaptive Game Grid Setup */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(9, var(--cell-size));
-    grid-template-rows: repeat(9, var(--cell-size));
-    border: 3px solid var(--grid-border);
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 15px auto;
-    clear: both;
-    width: max-content;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: repeat(9, var(--cell-size));
+  grid-template-rows: repeat(9, var(--cell-size));
+  border: 3px solid var(--grid-border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 15px auto;
+  clear: both;
+  width: max-content;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .cell {
-    width: var(--cell-size);
-    height: var(--cell-size);
-    border: 1px solid var(--cell-border);
-    font-size: calc(var(--cell-size) * 0.45);
-    font-weight: 700;
-    text-align: center;
-    line-height: var(--cell-size);
-    cursor: pointer;
-    background-color: var(--cell-bg);
-    color: var(--text-color);
-    transition: background-color 0.15s, color 0.15s;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid var(--cell-border);
+  font-size: calc(var(--cell-size) * 0.45);
+  font-weight: 700;
+  text-align: center;
+  line-height: var(--cell-size);
+  cursor: pointer;
+  background-color: var(--cell-bg);
+  color: var(--text-color);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 }
 
 /* 3x3 Grid Section Dividers */
-.cell:nth-child(3n) { border-right: 2.5px solid var(--grid-border); }
-.cell:nth-child(9n) { border-right: none; }
-.cell:nth-child(n+19):nth-child(-n+27),
-.cell:nth-child(n+46):nth-child(-n+54) {
-    border-bottom: 2.5px solid var(--grid-border);
+.cell:nth-child(3n) {
+  border-right: 2.5px solid var(--grid-border);
+}
+.cell:nth-child(9n) {
+  border-right: none;
+}
+.cell:nth-child(n + 19):nth-child(-n + 27),
+.cell:nth-child(n + 46):nth-child(-n + 54) {
+  border-bottom: 2.5px solid var(--grid-border);
 }
 
 /* Board Dynamic Rule Classes */
 .cell.initial {
-    background-color: var(--cell-initial-bg);
-    opacity: 0.85;
-    cursor: not-allowed;
+  background-color: var(--cell-initial-bg);
+  opacity: 0.85;
+  cursor: not-allowed;
 }
 
 .cell.selected {
-    background-color: var(--cell-selected) !important;
+  background-color: var(--cell-selected) !important;
 }
 
 .cell.error {
-    background-color: #f8d7da !important;
-    color: #b71c1c !important;
+  background-color: #f8d7da !important;
+  color: #b71c1c !important;
+}
+[data-theme="dark"] .cell.error {
+  background-color: #5c2c2e !important;
+  color: #ffb4ab !important;
 }
 
 .cell.correct {
-    color: #388e3c; /* Pastel Emerald green */
+  color: #2e7d32 !important; /* Pastel Emerald green */
 }
 [data-theme="dark"] .cell.correct {
-    color: #81c784; /* Soft green accent for dark contrast surfaces */
+  color: #81c784 !important; /* Soft green accent for dark contrast surfaces */
 }
 
 .cell.highlight-match {
-    background-color: var(--match-highlight);
+  background-color: var(--match-highlight);
 }
 
 .controls {
-    margin: 15px 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 button {
-    padding: 12px 22px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: transform 0.1s active, background-color 0.2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  padding: 12px 22px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    transform 0.1s active,
+    background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#reset-btn { background-color: var(--btn-bg); border: 1px solid var(--btn-border); }
-#check-btn { background-color: #a8928a; color: white; }
-[data-theme="dark"] #check-btn { background-color: #5c4d47; }
+#reset-btn {
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--text-color);
+}
+#check-btn {
+  background-color: #a8928a;
+  color: white;
+}
+[data-theme="dark"] #check-btn {
+  background-color: #5c4d47;
+}
 
 /* Optimized Mobile Touch Keypad Layout */
 .number-pad {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .pad-btn {
-    background-color: var(--btn-bg);
-    border: 1px solid var(--btn-border);
-    padding: 14px 0;
-    font-size: 1.2rem;
-    border-radius: 14px;
-    color: var(--text-color);
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  padding: 14px 0;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  color: var(--text-color);
 }
 
-button:active, .pad-btn:active {
-    transform: scale(0.96); /* Tiny tactile feedback pop on click */
+button:active,
+.pad-btn:active {
+  transform: scale(0.96); /* Tiny tactile feedback pop on click */
 }
