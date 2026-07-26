@@ -4,7 +4,8 @@ let solutionBoard = [];
 let selectedCell = null;
 let mistakes = 0;
 const maxMistakes = 3;
-let hintsRemaining = 3;
+let hintsRemaining = 5; // Updated max hints to 5
+let isPaused = false;
 
 // Timer state variables
 let timerInterval = null;
@@ -14,6 +15,9 @@ const gridContainer = document.getElementById('sudoku-grid');
 const mistakesDisplay = document.getElementById('mistakes');
 const timerDisplay = document.getElementById('timer');
 const hintBtn = document.getElementById('hint-btn');
+const pauseBtn = document.getElementById('pause-btn');
+const resumeBtn = document.getElementById('resume-btn');
+const pauseOverlay = document.getElementById('pause-overlay');
 const difficultySelect = document.getElementById('difficulty-select');
 const themeToggle = document.getElementById('theme-toggle');
 
@@ -75,12 +79,10 @@ function createPlayablePuzzle(clues = 45) {
 }
 
 /**
- * TIMER CONTROLLER FUNCTIONS
+ * TIMER & PAUSE CONTROLLER FUNCTIONS
  */
 function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    secondsElapsed = 0;
-    updateTimerDisplay();
+    stopTimer();
     timerInterval = setInterval(() => {
         secondsElapsed++;
         updateTimerDisplay();
@@ -95,7 +97,34 @@ function updateTimerDisplay() {
 }
 
 function stopTimer() {
-    if (timerInterval) clearInterval(timerInterval);
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function pauseGame() {
+    if (isPaused) return;
+    isPaused = true;
+    stopTimer();
+    if (pauseOverlay) pauseOverlay.classList.remove('hidden');
+    if (pauseBtn) pauseBtn.textContent = '▶️ Resume';
+}
+
+function resumeGame() {
+    if (!isPaused) return;
+    isPaused = false;
+    startTimer();
+    if (pauseOverlay) pauseOverlay.classList.add('hidden');
+    if (pauseBtn) pauseBtn.textContent = '⏸️ Pause';
+}
+
+function togglePause() {
+    if (isPaused) {
+        resumeGame();
+    } else {
+        pauseGame();
+    }
 }
 
 /**
@@ -105,11 +134,15 @@ function initBoard() {
     gridContainer.innerHTML = '';
     currentBoard = [];
     selectedCell = null;
+    isPaused = false;
+
+    if (pauseOverlay) pauseOverlay.classList.add('hidden');
+    if (pauseBtn) pauseBtn.textContent = '⏸️ Pause';
     
     mistakes = 0;
     if (mistakesDisplay) mistakesDisplay.textContent = `0/${maxMistakes}`;
 
-    hintsRemaining = 3;
+    hintsRemaining = 5; // Updated hints pool to 5
     if (hintBtn) {
         hintBtn.textContent = `💡 Hint (${hintsRemaining})`;
         hintBtn.disabled = false;
@@ -117,6 +150,8 @@ function initBoard() {
 
     const structuralClues = parseInt(difficultySelect.value) || 45;
 
+    secondsElapsed = 0;
+    updateTimerDisplay();
     startTimer();
     initialBoard = createPlayablePuzzle(structuralClues);
     
@@ -141,13 +176,14 @@ function initBoard() {
 }
 
 function selectCell(element) {
+    if (isPaused) return;
     if (selectedCell) selectedCell.classList.remove('selected');
     selectedCell = element;
     selectedCell.classList.add('selected');
 }
 
 function updateSelectedCellValue(num) {
-    if (!selectedCell || selectedCell.classList.contains('initial')) return;
+    if (isPaused || !selectedCell || selectedCell.classList.contains('initial')) return;
     const index = parseInt(selectedCell.dataset.index);
     const row = Math.floor(index / 9);
     const col = index % 9;
@@ -191,16 +227,14 @@ function checkWinCondition() {
     }
 }
 
+// Hint execution core controller
 if (hintBtn) {
     hintBtn.addEventListener('click', () => {
-        if (hintsRemaining <= 0) return;
+        if (isPaused || hintsRemaining <= 0) return;
 
         if (!selectedCell) {
-
-            alert("Please apne koi khali box pr click nhi kra h to hint ke liye click kre ek box pr jaha apko hint chahiye.");
-
+            alert("✨ Cozy Notice: You haven't selected a cell yet! Please tap an empty square on the grid first. 🧩");
             return;
-
         }
 
         if (selectedCell.classList.contains('initial')) {
@@ -214,7 +248,7 @@ if (hintBtn) {
         const answer = solutionBoard[row][col];
 
         if (currentBoard[index] === answer) {
-            alert("✨ we Notice: yeh box phle se hi solve hai...please hint ke liye ek khali box pr click kre.");
+            alert("✨ Cozy Notice: This box is already solved correctly! Select an empty or incorrect square to reveal a hint. 🧠");
             return;
         }
 
@@ -233,6 +267,18 @@ if (hintBtn) {
     });
 }
 
+// Pause and Resume Button Triggers
+if (pauseBtn) pauseBtn.addEventListener('click', togglePause);
+if (resumeBtn) resumeBtn.addEventListener('click', resumeGame);
+
+// Auto-pause when user leaves PWA or switches tabs
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !isPaused) {
+        pauseGame();
+    }
+});
+
+// Global Dark Mode Theme Switcher Controller Setup
 if (themeToggle) {
     themeToggle.addEventListener('click', () => {
         const activeTheme = document.documentElement.getAttribute('data-theme');
@@ -246,8 +292,9 @@ if (themeToggle) {
     });
 }
 
+// Core control triggers
 document.addEventListener('keydown', (e) => {
-    if (!selectedCell) return;
+    if (isPaused || !selectedCell) return;
     if (e.key >= '1' && e.key <= '9') updateSelectedCellValue(e.key);
     else if (e.key === 'Backspace' || e.key === 'Delete') updateSelectedCellValue("");
 });
@@ -257,32 +304,7 @@ document.querySelectorAll('.pad-btn').forEach(btn => {
 });
 
 document.getElementById('reset-btn').addEventListener('click', initBoard);
-
-// Auto-refresh the game board layout immediately when a different difficulty level is clicked
 difficultySelect.addEventListener('change', initBoard);
 
-// Start
+// Start game on load
 initBoard();
-
-// Register Service Worker
-if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", () => {
-
-        navigator.serviceWorker.register("./sw.js")
-
-            .then(registration => {
-
-                console.log("Service Worker Registered");
-
-            })
-
-            .catch(error => {
-
-                console.log("Service Worker Failed", error);
-
-            });
-
-    });
-
-}
