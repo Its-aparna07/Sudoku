@@ -4,7 +4,7 @@ let solutionBoard = [];
 let selectedCell = null;
 let mistakes = 0;
 const maxMistakes = 3;
-let hintsRemaining = 5; // Updated max hints to 5
+let hintsRemaining = 5;
 let isPaused = false;
 
 // Timer state variables
@@ -142,7 +142,7 @@ function initBoard() {
     mistakes = 0;
     if (mistakesDisplay) mistakesDisplay.textContent = `0/${maxMistakes}`;
 
-    hintsRemaining = 5; // Updated hints pool to 5
+    hintsRemaining = 5;
     if (hintBtn) {
         hintBtn.textContent = `💡 Hint (${hintsRemaining})`;
         hintBtn.disabled = false;
