@@ -13,7 +13,8 @@
     --timer-bg: #f5ebe6;
     --match-highlight: #fff2cc;  
     
-    --cell-size: min(10.2vw, 46px); 
+    /* Dynamically calculates exact fit for 9 cells + borders inside any mobile screen */
+    --cell-size: min(calc((100vw - 70px) / 9), 44px); 
 }
 
 [data-theme="dark"] {
@@ -65,6 +66,9 @@ body {
     border-radius: 24px; 
     box-shadow: 0 10px 30px rgba(92, 74, 67, 0.1);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Enforces strict horizontal centering for all child components */
     transition: background-color 0.4s;
 }
 
@@ -88,6 +92,7 @@ h1 {
     font-weight: 700;
     letter-spacing: -0.5px;
     text-align: left;
+    width: 100%;
     padding-left: 5px;
 }
 
@@ -114,14 +119,17 @@ h1 {
 .grid-wrapper {
     position: relative;
     margin: 15px auto;
-    width: max-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .pause-overlay {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
     height: 100%;
     background-color: var(--container-bg);
     border: 3px solid var(--grid-border);
@@ -132,6 +140,7 @@ h1 {
     align-items: center;
     gap: 15px;
     z-index: 10;
+    padding: 0 20px;
     backdrop-filter: blur(8px);
 }
 
@@ -169,7 +178,7 @@ h1 {
     border: 3px solid var(--grid-border);
     border-radius: 12px;
     overflow: hidden;
-    clear: both;
+    margin: 0 auto;
     width: max-content;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -226,6 +235,7 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+    width: 100%;
 }
 
 .controls button, .cozy-select {
@@ -259,6 +269,7 @@ button:disabled {
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
     margin-top: 10px;
+    width: 100%;
 }
 
 .pad-btn {
