@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cozy-sudoku-v6'; // Bumped to v6 for auto-pause overlay & 5 hints update
+const CACHE_NAME = 'cozy-sudoku-v7'; // Bumped to v7 to force centering layout update
 const ASSETS_TO_CACHE = [
   "./",
   "index.html",
@@ -25,7 +25,7 @@ self.addEventListener('install', (event) => {
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
-  self.skipWaiting(); // Force the latest worker to activate instantly
+  self.skipWaiting();
 });
 
 // 2. Activate Event - Automatically purges older caches so all new features load instantly
@@ -49,7 +49,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      // Return local cache file if found, otherwise fall back to network
       return cachedResponse || fetch(event.request);
     })
   );
