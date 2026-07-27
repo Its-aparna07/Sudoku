@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cozy-sudoku-v7'; // Bumped to v7 to force centering layout update
+const CACHE_NAME = 'cozy-sudoku-v8'; // Bumped to v8 to update grid layout instantly
 const ASSETS_TO_CACHE = [
   "./",
   "index.html",
@@ -17,25 +17,23 @@ const ASSETS_TO_CACHE = [
   "icons/icon-512x512.png",
 ];
 
-// 1. Install Event - Caching the game assets locally
+// 1. Install Event - Caching local assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('Cozy caching complete!');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
   self.skipWaiting();
 });
 
-// 2. Activate Event - Automatically purges older caches so all new features load instantly
+// 2. Activate Event - Purges old caches automatically
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('Clearing old cache room:', cache);
             return caches.delete(cache);
           }
         })
@@ -45,7 +43,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// 3. Fetch Event - Cache-First Strategy for Instant Offline Play
+// 3. Fetch Event - Cache-First Strategy
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
